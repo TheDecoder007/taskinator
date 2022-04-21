@@ -6,26 +6,7 @@ var tasksToDoEl = document.querySelector("#tasks-to-do");
 var tasksInProgressEl = document.querySelector("#tasks-in-progress");
 var tasksCompletedEl = document.querySelector("#tasks-completed");
 
-var tasks = [
-    {
-        id: 1,
-        name: "Add localStorage persistence",
-        type: "Web",
-        status: "In progress"
-    },
-    {
-        id: 2, 
-        name: "Learn JavaScript",
-        type: "Web",
-        status: "In progress"
-    },
-    {
-        id: 3, 
-        name: "Refactor code",
-        type: "Web",
-        status: "To do"
-    }
-];
+var tasks = [];
 
 
 var taskFormHandler = function(event) {
@@ -88,6 +69,7 @@ var createTaskEl = function (taskDataObj) {
 
     taskDataObj.id = taskIdCounter;
     tasks.push(taskDataObj);
+    saveTasks();
     
      
     //task counter
@@ -154,6 +136,7 @@ var completeEditTask = function(taskName, taskType, taskId) {
             tasks[i].name = taskName; 
             tasks[i].type = taskType;
         }
+        saveTasks();
     };
 
     alert("Task updated!");
@@ -209,6 +192,7 @@ var completeEditTask = function(taskName, taskType, taskId) {
         }
 //reassign tasks array to be the same as updatedTaskArr
         tasks = updatedTaskArr;
+        saveTasks();
     };
 
 
@@ -235,7 +219,12 @@ var completeEditTask = function(taskName, taskType, taskId) {
                     tasks[i].status = statusValue;
                 }
             }
+            saveTasks();
         };
+
+        var saveTasks = function() {
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+        }
 
 //for changing the status
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
