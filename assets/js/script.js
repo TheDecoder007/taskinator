@@ -222,8 +222,25 @@ var completeEditTask = function(taskName, taskType, taskId) {
             saveTasks();
         };
 
-        var saveTasks = function() {
+//save tasks to local storage for persistence after refresh (sending back through createTaskEl)
+//broken    
+            var saveTasks = function() {
             localStorage.setItem("tasks", JSON.stringify(tasks));
+        }
+
+        var loadTasks = function() {
+            var savedTasks = localStorage.getItem("tasks");
+
+            if (!savedTasks) {
+                return false;
+            }
+            tasks = JSON.parse(tasks);
+
+            for (var i = 0; i < savedTasks.length; i++) {
+//pass each task object into the createTaskEl() function
+                createTaskEl(saveTasks[i]);
+            }
+
         }
 
 //for changing the status
